@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_layout">8dp</dimen>
+    <dimen name="margin_description">8dp</dimen>
+    <dimen name="margin_all_show">8dp</dimen>
+
+    <dimen name="padding_title">12dp</dimen>
+    <dimen name="padding_area">12dp</dimen>
+    <dimen name="padding_author">12dp</dimen>
+    <dimen name="padding_all_show">12dp</dimen>
+
+    <dimen name="text_size_title">30sp</dimen>
+    <dimen name="text_size_content">24sp</dimen>
+</resources>

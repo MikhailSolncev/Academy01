@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Academy01</string>
+    <string name="app_name">Devfest SPB</string>
+    <string name="button_all_show">ALL SHOW</string>
+    <string name="show_description_offline_mode">Offline mode support by mobile apps - tricky task. Resolving this problem can move application to another level. Show contains theoretical decisions and practic resolution of this problem.</string>
+    <string name="show_author_kalbaev">Ruslan Kalbaev</string>
+    <string name="show_title_offline_mode">Offline mode mobile app support. Synchronization</string>
+    <string name="show_area_android">Android</string>
 </resources>
