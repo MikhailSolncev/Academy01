@@ -50,6 +50,7 @@
         android:paddingTop="0dp"
         android:paddingEnd="@dimen/margin_description"
         android:scrollbars="vertical"
+        android:id="@+id/text_vew_description"
         android:text="@string/show_description_offline_mode"
         android:textSize="@dimen/text_size_content"
         app:layout_constraintBottom_toBottomOf="parent"
