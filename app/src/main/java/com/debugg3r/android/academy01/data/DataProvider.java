@@ -13,7 +13,8 @@ public class DataProvider {
             Lecture lecture = new Lecture();
             lecture.time = "" + number + ":" + number;
             lecture.theme = "theme of lecture " + number + " : " + number;
-            lecture.author = new Author();
+            lecture.description = "description" + number + " description" + number + " description" + number + " description" + number + "ololololo";
+                    lecture.author = new Author();
             lecture.author.company = "Company " + number;
             lecture.author.name = "Author" + number + " Name" + number;
 
