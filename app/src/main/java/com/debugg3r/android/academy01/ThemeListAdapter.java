@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.debugg3r.android.academy01.data.Lecture;
 
 import java.util.List;
 
-public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.ListViewHolder> {
+public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.ListViewHolder> implements DataAdapter<Lecture> {
 
     private List<Lecture> data;
 
@@ -45,6 +46,18 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.List
         return data.size();
     }
 
+    @Override
+    public void updateData(List<Lecture> newData) {
+        if (data == null)
+            data = newData;
+        else {
+            List<Lecture> oldData = this.data;
+            this.data = newData;
+            DiffCallback callback = new DiffCallback(oldData, newData);
+            DiffUtil.calculateDiff(callback).dispatchUpdatesTo(this);
+        }
+    }
+
     class ListViewHolder extends RecyclerView.ViewHolder {
         TextView time;
         TextView theme;
@@ -68,4 +81,5 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.List
         }
 
     }
+
 }
