@@ -3,10 +3,10 @@ package com.debugg3r.android.academy01;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
-import com.debugg3r.android.academy01.data.Lecture;
+import com.debugg3r.android.academy01.data.Activity;
+import com.debugg3r.android.academy01.data.Talk;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,10 +21,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            Lecture lecture = (Lecture) bundle.get("lecture");
-            if (lecture != null) {
-                theme.setText(lecture.theme);
-                author.setText(lecture.author.name);
+            Activity activity = (Activity) bundle.get("lecture");
+            if (activity != null) {
+                theme.setText(activity.title);
+                if (activity instanceof Talk) {
+                    //author.setText(lecture.speaker.name);
+                    author.setText(((Talk)activity).getSpeakerName());
+                }
             }
         }
 

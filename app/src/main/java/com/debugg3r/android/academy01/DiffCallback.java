@@ -2,15 +2,16 @@ package com.debugg3r.android.academy01;
 
 import android.support.v7.util.DiffUtil;
 
-import com.debugg3r.android.academy01.data.Lecture;
+import com.debugg3r.android.academy01.data.Activity;
+import com.debugg3r.android.academy01.data.Talk;
 
 import java.util.List;
 
 public class DiffCallback extends DiffUtil.Callback {
-    private final List<Lecture> oldList;
-    private final List<Lecture> newList;
+    private final List<Activity> oldList;
+    private final List<Activity> newList;
 
-    public DiffCallback(List<Lecture> oldList, List<Lecture> newList) {
+    public DiffCallback(List<Activity> oldList, List<Activity> newList) {
         this.oldList = oldList;
         this.newList = newList;
     }

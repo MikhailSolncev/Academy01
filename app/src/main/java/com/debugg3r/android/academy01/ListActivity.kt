@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.debugg3r.android.academy01.data.DataProvider
-import com.debugg3r.android.academy01.data.Lecture
 
 class ListActivity : AppCompatActivity() {
 

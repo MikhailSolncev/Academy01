@@ -1,9 +1,9 @@
 package com.debugg3r.android.academy01;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,34 +11,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.debugg3r.android.academy01.data.Lecture;
+import com.debugg3r.android.academy01.data.Activity;
+import com.debugg3r.android.academy01.data.Talk;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.ListViewHolder> implements DataAdapter<Lecture> {
+public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.ListViewHolder> implements DataAdapter<Activity> {
 
-    private List<Lecture> data;
+    private List<Activity> data;
 
-    ThemeListAdapter(List<Lecture> data) {
+    ThemeListAdapter(List<Activity> data) {
         this.data = data;
     }
 
+    @NotNull
     @Override
-    public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         return new ListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         if (data.size() < position)
             throw new IndexOutOfBoundsException("Position " + position + " out of " + data.size());
 
-        Lecture lecture = data.get(position);
+        Activity lecture = data.get(position);
         holder.lecture = lecture;
-        holder.theme.setText(lecture.theme);
+        holder.theme.setText(lecture.title);
         holder.time.setText(lecture.time);
-        holder.author.setText(lecture.author.name);
+        if (lecture instanceof Talk) {
+            holder.author.setVisibility(View.VISIBLE);
+            holder.author.setText(((Talk)lecture).getSpeakerName());
+        } else
+            holder.author.setVisibility(View.GONE);
     }
 
     @Override
@@ -47,11 +55,11 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.List
     }
 
     @Override
-    public void updateData(List<Lecture> newData) {
+    public void updateData(List<Activity> newData) {
         if (data == null)
             data = newData;
         else {
-            List<Lecture> oldData = this.data;
+            List<Activity> oldData = this.data;
             this.data = newData;
             DiffCallback callback = new DiffCallback(oldData, newData);
             DiffUtil.calculateDiff(callback).dispatchUpdatesTo(this);
@@ -62,7 +70,7 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.List
         TextView time;
         TextView theme;
         TextView author;
-        Lecture lecture;
+        Activity lecture;
 
         ListViewHolder(View itemView) {
             super(itemView);
