@@ -9,8 +9,8 @@ import java.util.Locale;
 
 public class DataProvider implements Runnable{
     private static DataProvider instance;
-    private List<Lecture> data;
-    private DataAdapter<Lecture> adapter;
+    private List<Activity> data;
+    private DataAdapter<Activity> adapter;
 
     private DataProvider(){
     }
@@ -21,32 +21,48 @@ public class DataProvider implements Runnable{
         return instance;
     }
 
-    public static List<Lecture> getData(){
-        List<Lecture> result = new LinkedList<>();
+    public static List<Activity> getData(){
+        List<Activity> result = new LinkedList<>();
 
         fillTestData(result);
 
         return result;
     }
 
-    private static void fillTestData(List<Lecture> result) {
+    private static void fillTestData(List<Activity> result) {
+
+        result.clear();
+
+        Activity activity = new Activity();
+        activity.time = "00:00";
+        activity.title = "Opening";
+        result.add(activity);
+
         for (int i = 1; i < 25; i++) {
             String number = String.format(Locale.US,"%02d", i);
-            Lecture lecture = new Lecture();
-            lecture.time = "" + number + ":" + number;
-            lecture.theme = "theme of lecture " + number + " : " + number;
-            lecture.description = "description" + number + " description" + number + " description" + number + " description" + number + "ololololo";
-            lecture.author = new Author();
-            lecture.author.company = "Company " + number;
-            lecture.author.name = "Author" + number + " Name" + number;
+            Talk talk = new Talk();
+            talk.time = "" + number + ":" + number;
+            talk.title = "title of talk " + number + " : " + number;
+            talk.description = "description" + number + " description" + number + " description" + number + " description" + number + "ololololo";
+            //talk.speaker = new Speaker();
+            talk.speaker = "speaker '" + number + "'";
+//            talk.speaker.company = "Company " + number;
+//            talk.speaker.name = "Author" + number + " Name" + number;
+            talk.room = (byte)i;
+            talk.track = "android";
 
-            result.add(lecture);
+            result.add(talk);
         }
+
+        activity = new Activity();
+        activity.title = "Closing";
+        activity.time = "26:26";
+        result.add(activity);
     }
 
-    public void provideData(DataAdapter<Lecture> adapter) {
+    public void provideData(DataAdapter<Activity> adapter) {
         if (data == null)
-            data = new ArrayList<Lecture>();
+            data = new ArrayList<>();
             //data = getData();
 
         this.adapter = adapter;
@@ -62,7 +78,7 @@ public class DataProvider implements Runnable{
 
     void doHardWork() {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
