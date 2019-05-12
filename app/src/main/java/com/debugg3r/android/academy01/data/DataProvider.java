@@ -29,7 +29,7 @@ public class DataProvider implements Runnable{
         return result;
     }
 
-    private static void fillTestData(List<Activity> result) {
+    public static void fillTestData(List<Activity> result) {
 
         result.clear();
 
@@ -93,4 +93,5 @@ public class DataProvider implements Runnable{
     public void run() {
 
     }
+
 }
