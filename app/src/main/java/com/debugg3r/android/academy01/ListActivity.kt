@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.debugg3r.android.academy01.data.DataProvider
+import com.debugg3r.android.academy01.data.Lecture
 
 class ListActivity : AppCompatActivity() {
 
@@ -14,7 +15,10 @@ class ListActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.list_recycler_vew)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ThemeListAdapter(DataProvider.getData())
+        //recyclerView.adapter = ThemeListAdapter(DataProvider.getData())
+        val adapter = ThemeListAdapter(listOf())
+        recyclerView.adapter = adapter
+        DataProvider.getInstance().provideData(adapter)
         recyclerView.setHasFixedSize(true)
 
     }
