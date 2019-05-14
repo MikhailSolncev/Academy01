@@ -18,6 +18,11 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class InternetHelper {
     private static String mBaseUrl = "storage.yandexcloud.net";
     private static String mAddress = "devfestapi/db.json";
@@ -46,14 +51,14 @@ public class InternetHelper {
         return result;
     }
 
-    public static Map<String, List> readMapSchedule(Map<String, List> value) {
+    static Map<String, List> readMapSchedule(Map<String, List> value) {
         Map<String, List> result = new HashMap<>();
         for (Map.Entry<String, List> entry : value.entrySet())
             result.put(entry.getKey(), readListActivity(entry.getValue()));
         return result;
     }
 
-    public static List<Activity> readListActivity(List<Map<String, Object>> value) {
+    static List<Activity> readListActivity(List<Map<String, Object>> value) {
         List<Activity> result = new ArrayList();
 
         for (Map<String, Object> entry : value) {
@@ -75,7 +80,7 @@ public class InternetHelper {
         return result;
     }
 
-    public static List<Speaker> readListSpeakers(List<Map> value) {
+    static List<Speaker> readListSpeakers(List<Map> value) {
         List result = new ArrayList();
         for (Map<String, Object> entry : value) {
             if (!entry.containsKey("id")) continue;
@@ -196,8 +201,22 @@ public class InternetHelper {
         return result;
     }
 
-    static String getDataOk() {
-        return "";
+    public static String getDataOk() {
+        String result = "{}";
+
+        OkHttpClient client = new OkHttpClient();
+        String fullUrl = "https://" + mBaseUrl + "/" + mAddress;
+        Request request = new Request.Builder().get().url(fullUrl).build();
+        Call call = client.newCall(request);
+        try {
+            Response response = call.execute();
+            result = response.body().string();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     static String getDataRetrofit() {

@@ -32,6 +32,15 @@ public class ExampleUnitTest {
     }
 
     @Test
+    public void testHelperOkhttp() {
+        String result = InternetHelper.getDataOk();
+
+        assertNotEquals("String is empty \"\"", "", result);
+        assertNotEquals("String is empty \"[]\"", "[]", result);
+        assertNotEquals("String is empty \"{}\"", "{}", result);
+    }
+
+    @Test
     public void testJsonDeserializeJson() {
         String json = "{\"speakers\":[], \"schedule\": {\"talks\": [], \"activities\": []}}";
         Map result = InternetHelper.readJson(json);
