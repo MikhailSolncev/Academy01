@@ -30,4 +30,26 @@ public class ExampleUnitTest {
         Gson gson = new Gson();
         Map result = gson.fromJson(data, Map.class);
     }
+
+    @Test
+    public void testJsonDeserializeJson() {
+        String json = "{\"speakers\":[], \"schedule\": {\"talks\": [], \"activities\": []}}";
+        Map result = InternetHelper.readJson(json);
+
+        assertEquals("Map size not two", 2, result.size());
+        assertTrue("Map does not contains speakers", result.containsKey("speakers"));
+        assertFalse("Map contains talks", result.containsKey("talks"));
+    }
+
+    @Test
+    public void testJsonRalData() {
+        String json = InternetHelper.getDataHttp();
+        Map result = InternetHelper.readJson(json);
+
+        assertTrue("Result does not contains speakers", result.containsKey("speakers"));
+        assertTrue("speakers list is empty", ((List)result.get("speakers")).size() > 0);
+        assertTrue("Result does not contains schedule", result.containsKey("schedule"));
+        assertEquals("schedule is not size of two", 2, ((Map)result.get("schedule")).size());
+        assertEquals("activities is not size of three", 3, ((List)((Map)result.get("schedule")).get("activities")).size());
+    }
 }
