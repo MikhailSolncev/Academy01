@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class DataProvider implements Runnable{
+public class DataProvider{
     private static DataProvider instance;
     private List<Activity> data;
     private DataAdapter<Activity> adapter;
@@ -89,9 +89,7 @@ public class DataProvider implements Runnable{
             adapter.updateData(data);
     }
 
-    @Override
-    public void run() {
-
+    public List<Activity> getDataHttp() {
+        return new ArrayList<>();
     }
-
 }
