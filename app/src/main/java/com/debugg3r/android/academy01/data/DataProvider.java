@@ -1,5 +1,7 @@
 package com.debugg3r.android.academy01.data;
 
+import android.os.Build;
+
 import com.debugg3r.android.academy01.DataAdapter;
 
 import java.util.ArrayList;
@@ -9,15 +11,18 @@ import java.util.Locale;
 
 public class DataProvider{
     private static DataProvider instance;
-    private List<Activity> data;
+    private List<Activity> activities;
+    private List<Speaker> speakers;
     private DataAdapter<Activity> adapter;
 
     private DataProvider(){
     }
 
     public static synchronized DataProvider getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new DataProvider();
+            instance.getActualData();
+        }
         return instance;
     }
 
@@ -27,6 +32,18 @@ public class DataProvider{
         fillTestData(result);
 
         return result;
+    }
+
+    private void getActualData() {
+        DevfestResponse response = InternetHelper.getDataRetrofit();
+
+        activities.addAll(response.schedule.activities);
+        activities.addAll(response.schedule.talks);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            activities.sort((a1, a2) -> a1.time.compareTo(a2.time));
+        }
+
+        speakers.addAll(response.speakers);
     }
 
     public static void fillTestData(List<Activity> result) {
@@ -60,13 +77,18 @@ public class DataProvider{
         result.add(activity);
     }
 
+    public void fillActivities(List newData) {
+        newData.clear();
+        newData.addAll(activities);
+    }
+
     public void provideData(DataAdapter<Activity> adapter) {
-        if (data == null)
-            data = new ArrayList<>();
-            //data = getData();
+        if (activities == null)
+            activities = new ArrayList();
+            //activities = getData();
 
         this.adapter = adapter;
-        adapter.updateData(data);
+        adapter.updateData(activities);
 
         Thread thread = new Thread(this::doHardWork);
         thread.start();
@@ -83,10 +105,11 @@ public class DataProvider{
             e.printStackTrace();
         }
 
-        data = getData();
+        //activities = getData();
+        getActualData();
 
         if (adapter != null)
-            adapter.updateData(data);
+            adapter.updateData(activities);
     }
 
     public List<Activity> getDataHttp() {

@@ -47,7 +47,8 @@ public class ListPresenter {
             }
 
             List newData = new ArrayList();
-            DataProvider.fillTestData(newData);
+            DataProvider.getInstance().fillActivities(newData);
+            //DataProvider.fillTestData(newData);
             activities = newData;
         }
 
