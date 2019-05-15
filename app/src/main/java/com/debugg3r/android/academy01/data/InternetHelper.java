@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -22,9 +23,11 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InternetHelper {
-    private static String mBaseUrl = "storage.yandexcloud.net";
+    private static String mBaseUrl = "https://storage.yandexcloud.net";
     private static String mAddress = "devfestapi/db.json";
     private static String LOG_TAG = "INTERNET_HELPER";
 
@@ -121,7 +124,7 @@ public class InternetHelper {
         //  create url
         URL url;
         try {
-            url = new URL("https://" + mBaseUrl + "/" + mAddress);
+            url = new URL("" + mBaseUrl + "/" + mAddress);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             Log.e(LOG_TAG, "Error creating URL");
@@ -205,7 +208,7 @@ public class InternetHelper {
         String result = "{}";
 
         OkHttpClient client = new OkHttpClient();
-        String fullUrl = "https://" + mBaseUrl + "/" + mAddress;
+        String fullUrl = "" + mBaseUrl + "/" + mAddress;
         Request request = new Request.Builder().get().url(fullUrl).build();
         Call call = client.newCall(request);
         try {
@@ -219,7 +222,31 @@ public class InternetHelper {
         return result;
     }
 
-    static String getDataRetrofit() {
-        return "";
+    public static DevfestResponse getDataRetrofit() {
+
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS);
+
+        Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
+                .baseUrl(mBaseUrl)
+                .client(clientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = retrofitBuilder.build();
+
+        InternetService service = retrofit.create(InternetService.class);
+
+        retrofit2.Call<DevfestResponse> call = service.getData();
+
+        DevfestResponse response = null;
+        try {
+            response = call.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response;
     }
 }

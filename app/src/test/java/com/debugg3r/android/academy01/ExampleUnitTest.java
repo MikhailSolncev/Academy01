@@ -1,5 +1,6 @@
 package com.debugg3r.android.academy01;
 
+import com.debugg3r.android.academy01.data.DevfestResponse;
 import com.debugg3r.android.academy01.data.InternetHelper;
 import com.google.gson.Gson;
 
@@ -60,5 +61,31 @@ public class ExampleUnitTest {
         assertTrue("Result does not contains schedule", result.containsKey("schedule"));
         assertEquals("schedule is not size of two", 2, ((Map)result.get("schedule")).size());
         assertEquals("activities is not size of three", 3, ((List)((Map)result.get("schedule")).get("activities")).size());
+    }
+
+    @Test
+    public void testResponseFromJson() {
+        String json = InternetHelper.getDataHttp();
+        Gson gson = new Gson();
+        DevfestResponse response = gson.fromJson(json, DevfestResponse.class);
+
+        assertNotNull("result does not contains speakers", response.speakers);
+        assertTrue("speakers list is empty", response.speakers.size() > 0);
+        assertNotNull("Result does not contains schedule", response.schedule);
+        assertNotNull("schedule is not size of two", response.schedule.activities);
+        assertNotNull("schedule is not size of two", response.schedule.talks);
+        assertEquals("activities is not size of three", 3, response.schedule.activities.size());
+    }
+
+    @Test
+    public void testHelperRetrofit() {
+        DevfestResponse response = InternetHelper.getDataRetrofit();
+
+        assertNotNull("result does not contains speakers", response.speakers);
+        assertTrue("speakers list is empty", response.speakers.size() > 0);
+        assertNotNull("Result does not contains schedule", response.schedule);
+        assertNotNull("schedule is not size of two", response.schedule.activities);
+        assertNotNull("schedule is not size of two", response.schedule.talks);
+        assertEquals("activities is not size of three", 3, response.schedule.activities.size());
     }
 }
