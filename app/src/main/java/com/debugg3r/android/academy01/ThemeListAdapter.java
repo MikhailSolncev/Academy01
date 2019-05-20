@@ -18,7 +18,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.ListViewHolder> implements DataAdapter<Activity> {
+public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.BaseViewHolder> implements DataAdapter<Activity> {
+
+    private static final int TYPE_TALK = 9001;
+    private static final int TYPE_ACTIVITY = 9002;
 
     private List<Activity> data;
 
@@ -28,25 +31,38 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.List
 
     @NotNull
     @Override
-    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        return new ListViewHolder(view);
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BaseViewHolder holder = null;
+        if (viewType == TYPE_ACTIVITY) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_activity, parent, false);
+            holder = new ActivityViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_talk, parent, false);
+            holder = new TalkViewHolder(view);
+        }
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         if (data.size() < position)
             throw new IndexOutOfBoundsException("Position " + position + " out of " + data.size());
 
         Activity lecture = data.get(position);
-        holder.lecture = lecture;
-        holder.theme.setText(lecture.title);
-        holder.time.setText(lecture.time);
-        if (lecture instanceof Talk) {
-            holder.author.setVisibility(View.VISIBLE);
-            holder.author.setText(((Talk)lecture).getSpeakerName());
-        } else
-            holder.author.setVisibility(View.GONE);
+        if (holder.getItemViewType() == TYPE_TALK)
+            ((TalkViewHolder) holder).bind((Talk) lecture);
+        else
+            ((ActivityViewHolder) holder).bind(lecture);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (data.size() < position)
+            throw new IndexOutOfBoundsException("Position " + position + " out of " + data.size());
+
+        if (data.get(position) instanceof Talk)
+            return TYPE_TALK;
+        return TYPE_ACTIVITY;
     }
 
     @Override
@@ -66,28 +82,67 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.List
         }
     }
 
-    class ListViewHolder extends RecyclerView.ViewHolder {
+    abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         TextView time;
         TextView theme;
-        TextView author;
-        Activity lecture;
+        Activity activity;
 
-        ListViewHolder(View itemView) {
+        BaseViewHolder(View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.list_item_text_view_time);
             theme = itemView.findViewById(R.id.list_item_text_view_theme);
-            author = itemView.findViewById(R.id.list_item_text_view_author);
 
+            setupOnClick(itemView);
+        }
+
+        abstract void bind(Activity activity);
+
+        void setupOnClick(View itemView) {
             itemView.setOnClickListener(view -> {
                 Context context = itemView.getContext();
                 Intent intent = new Intent(context, MainActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("lecture", lecture);
+                bundle.putSerializable("lecture", activity);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             });
         }
 
     }
+
+    class TalkViewHolder extends BaseViewHolder {
+        TextView author;
+
+        TalkViewHolder(View itemView) {
+            super(itemView);
+            author = itemView.findViewById(R.id.list_item_text_view_author);
+
+        }
+
+        @Override
+        void bind(Activity activity) {
+            this.activity = activity;
+
+            Talk talk = (Talk) activity;
+            theme.setText(talk.title);
+            time.setText(talk.time);
+            author.setText(talk.speaker);
+        }
+    }
+
+    class ActivityViewHolder extends BaseViewHolder {
+
+        ActivityViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        void bind(Activity activity) {
+            this.activity = activity;
+            theme.setText(activity.title);
+            time.setText(activity.time);
+        }
+    }
+
 
 }

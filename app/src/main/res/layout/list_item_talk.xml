@@ -21,7 +21,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="theme"
-        android:id="@+id/list_item_text_view_theme"/>
+        android:id="@+id/list_item_text_view_theme"
+        />
 
     <TextView
         android:layout_width="0dp"

@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            Activity activity = (Activity) bundle.get("lecture");
+            Activity activity = (Activity) bundle.get("activity");
             if (activity != null) {
                 theme.setText(activity.title);
                 if (activity instanceof Talk) {
-                    //author.setText(lecture.speaker.name);
+                    //author.setText(activity.speaker.name);
                     author.setText(((Talk)activity).getSpeakerName());
                 }
             }
