@@ -36,13 +36,14 @@ public class DataProvider{
 
     private void getActualData() {
         DevfestResponse response = InternetHelper.getDataRetrofit();
-
+        activities = new ArrayList<>();
         activities.addAll(response.schedule.activities);
         activities.addAll(response.schedule.talks);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             activities.sort((a1, a2) -> a1.time.compareTo(a2.time));
         }
 
+        speakers = new ArrayList<>();
         speakers.addAll(response.speakers);
     }
 
@@ -112,7 +113,4 @@ public class DataProvider{
             adapter.updateData(activities);
     }
 
-    public List<Activity> getDataHttp() {
-        return new ArrayList<>();
-    }
 }
