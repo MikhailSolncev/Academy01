@@ -2,6 +2,7 @@ package com.debugg3r.android.academy01;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.debugg3r.android.academy01.data.Activity;
@@ -111,12 +113,19 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
     }
 
     class TalkViewHolder extends BaseViewHolder {
-        TextView author;
+        TextView speaker;
+        TextView track;
+        TextView room;
+        ImageView speakerCountry;
+        TextView speakerCompany;
 
         TalkViewHolder(View itemView) {
             super(itemView);
-            author = itemView.findViewById(R.id.list_item_text_view_author);
-
+            speaker = itemView.findViewById(R.id.list_item_text_view_speaker);
+            track = itemView.findViewById(R.id.list_item_text_view_track);
+            room = itemView.findViewById(R.id.list_item_text_view_room);
+            speakerCountry = itemView.findViewById(R.id.list_item_image_view_speaker_country);
+            speakerCompany = itemView.findViewById(R.id.list_item_text_view_speaker_company);
         }
 
         @Override
@@ -126,7 +135,22 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
             Talk talk = (Talk) activity;
             theme.setText(talk.title);
             time.setText(talk.time);
-            author.setText(talk.speaker);
+            speaker.setText(talk.getSpeakerName());
+            room.setText("Room " + talk.room);
+
+            track.setText(talk.track);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                if (talk.track.toLowerCase().equals("android")) {
+                    track.setBackgroundColor(track.getContext().getColor(R.color.track_android));
+                } else if (talk.track.toLowerCase().equals("frontend")) {
+                        track.setBackgroundColor(track.getContext().getColor(R.color.track_frontend));
+                } else if (talk.track.toLowerCase().equals("common")) {
+                        track.setBackgroundColor(track.getContext().getColor(R.color.track_common));
+                }
+            else
+                track.setBackgroundColor(0xFFFFFF);
+
+            speakerCompany.setText(talk.getSpeakerCompany());
         }
     }
 

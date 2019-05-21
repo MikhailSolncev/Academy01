@@ -36,6 +36,7 @@ public class DataProvider{
 
     private void getActualData() {
         DevfestResponse response = InternetHelper.getDataRetrofit();
+
         activities = new ArrayList<>();
         activities.addAll(response.schedule.activities);
         activities.addAll(response.schedule.talks);
@@ -63,7 +64,7 @@ public class DataProvider{
             talk.title = "title of talk " + number + " : " + number;
             talk.description = "description" + number + " description" + number + " description" + number + " description" + number + "ololololo";
             //talk.speaker = new Speaker();
-            talk.speaker = "speaker '" + number + "'";
+            talk.speakerId = "speaker '" + number + "'";
 //            talk.speaker.company = "Company " + number;
 //            talk.speaker.name = "Author" + number + " Name" + number;
             talk.room = (byte)i;

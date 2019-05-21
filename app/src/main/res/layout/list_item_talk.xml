@@ -2,8 +2,12 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/padding_list"
+    android:layout_marginStart="@dimen/padding_list"
+    android:layout_marginEnd="@dimen/padding_list"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--Time-->
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -12,7 +16,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/list_item_text_view_theme"
         android:text="time"
-        android:id="@+id/list_item_text_view_time"/>
+        android:id="@+id/list_item_text_view_time"
+        android:textSize="@dimen/text_size_list"
+        />
+
+    <!--Theme-->
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -22,15 +30,85 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="theme"
         android:id="@+id/list_item_text_view_theme"
+        android:textSize="@dimen/text_size_list"
         />
 
+    <!--Track-->
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="@id/list_item_text_view_theme"
         app:layout_constraintTop_toBottomOf="@id/list_item_text_view_theme"
+        app:layout_constraintEnd_toStartOf="@id/list_item_text_view_room"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_text_view_room"
+        android:id="@+id/list_item_text_view_track_background"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_list"
+        app:layout_constraintTop_toBottomOf="@id/list_item_text_view_theme"
+        app:layout_constraintStart_toStartOf="@id/list_item_text_view_theme"
+        android:textSize="@dimen/text_size_list"
+        android:textColor="@color/text_white"
+        android:text="track"
+        android:id="@+id/list_item_text_view_track"
+        android:background="@drawable/rectange_rounded"
+        />
+
+    <!--Room-->
+    <TextView
+        android:paddingTop="@dimen/padding_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="4"
+        app:layout_constraintStart_toEndOf="@id/list_item_text_view_track_background"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/list_item_text_view_author"
+        app:layout_constraintTop_toBottomOf="@id/list_item_text_view_theme"
+        android:text="room"
+        android:textSize="@dimen/text_size_list"
+        android:id="@+id/list_item_text_view_room"
+        />
+
+    <!--Speaker location-->
+    <ImageView
+        android:layout_width="@dimen/author_image_size"
+        android:layout_height="@dimen/author_image_size"
+        app:layout_constraintStart_toStartOf="@id/list_item_text_view_track"
+        app:layout_constraintTop_toBottomOf="@id/list_item_text_view_track"
+        app:layout_constraintEnd_toStartOf="@id/list_item_text_view_speaker"
+        android:id="@+id/list_item_image_view_speaker_country"
+        android:layout_marginTop="@dimen/padding_list"
+        android:background="@drawable/circle"
+        />
+
+    <!--Speaker name-->
+    <TextView
+        android:layout_marginStart="@dimen/padding_list"
+        android:layout_marginTop="@dimen/padding_list"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/list_item_image_view_speaker_country"
+        app:layout_constraintTop_toBottomOf="@id/list_item_text_view_track"
+        app:layout_constraintEnd_toEndOf="@id/list_item_text_view_speaker_company"
+        android:id="@+id/list_item_text_view_speaker"
         android:text="author"
+        android:textSize="@dimen/text_size_list"
+        />
+
+    <!--Speaker company-->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/padding_list"
+        app:layout_constraintTop_toTopOf="@id/list_item_text_view_speaker"
+        app:layout_constraintStart_toEndOf="@id/list_item_text_view_speaker"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_text_view_speaker"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/list_item_text_view_speaker_company"
+        android:textSize="@dimen/text_size_list"
+        android:text="author company"
         />
 </android.support.constraint.ConstraintLayout>

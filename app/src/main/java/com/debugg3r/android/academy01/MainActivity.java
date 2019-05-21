@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             if (activity != null) {
                 theme.setText(activity.title);
                 if (activity instanceof Talk) {
-                    //author.setText(activity.speaker.name);
+                    //speaker.setText(activity.speaker.name);
                     author.setText(((Talk)activity).getSpeakerName());
                 }
             }

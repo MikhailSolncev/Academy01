@@ -76,7 +76,7 @@ public class InternetHelper {
             if (entry.containsKey("description")) ((Talk)activity).title = (String) entry.get("description");
             if (entry.containsKey("room")) ((Talk)activity).room = (byte)(int)((double) entry.get("room"));
             if (entry.containsKey("track")) ((Talk)activity).track = (String) entry.get("track");
-            if (entry.containsKey("speaker")) ((Talk)activity).speaker = (String) entry.get("speaker");
+            if (entry.containsKey("speaker")) ((Talk)activity).speakerId = (String) entry.get("speaker");
 
             result.add(activity);
         }
@@ -246,6 +246,8 @@ public class InternetHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        response.processSpeakers();
 
         return response;
     }

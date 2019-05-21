@@ -16,11 +16,13 @@ public class ListPresenter {
 
     private ListPresenter() {
     }
+
     public static ListPresenter getInstance(){
         if (instance == null)
             instance = new ListPresenter();
         return instance;
     }
+
     static void destroy() {
         instance = null;
     }
@@ -41,7 +43,7 @@ public class ListPresenter {
     private void loadData() {
         if (activities.size() == 0) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -60,13 +62,5 @@ public class ListPresenter {
 
     public void detach() {activity = null;}
 
-    public void refresh(){
-        if (activity == null) return;
-
-        activity.showLoading();
-
-        Thread thread = new Thread(this::loadData);
-        thread.start();
-    }
 
 }

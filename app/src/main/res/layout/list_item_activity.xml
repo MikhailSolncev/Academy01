@@ -2,6 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/padding_list"
+    android:layout_marginStart="@dimen/padding_list"
+    android:layout_marginEnd="@dimen/padding_list"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -12,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/list_item_text_view_theme"
         android:text="time"
-        android:textSize="@dimen/text_size_content"
+        android:textSize="@dimen/text_size_list"
         android:id="@+id/list_item_text_view_time"/>
     <TextView
         android:layout_width="0dp"
@@ -23,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="theme"
         android:id="@+id/list_item_text_view_theme"
-        android:textSize="@dimen/text_size_middle"
+        android:textSize="@dimen/text_size_list"
         />
 
 </android.support.constraint.ConstraintLayout>
