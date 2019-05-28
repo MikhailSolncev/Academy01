@@ -6,6 +6,7 @@
     <color name="button_blue_dark">#1187FF</color>
     <color name="text_white">#FFFFFF</color>
     <color name="text_background_red">#FF4444</color>
+    <color name="text_dark_blue">#5500ce</color>
     <color name="track_common">#584281</color>
     <color name="track_android">#ff460e</color>
     <color name="track_frontend">#0e6bff</color>

@@ -2,6 +2,8 @@ package com.debugg3r.android.academy01;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,13 +20,16 @@ import com.debugg3r.android.academy01.data.Talk;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.BaseViewHolder> implements DataAdapter<Activity> {
 
     private static final int TYPE_TALK = 9001;
     private static final int TYPE_ACTIVITY = 9002;
 
+    private static Map<String, Drawable> flags;
     private List<Activity> data;
 
     ThemeListAdapter(List<Activity> data) {
@@ -34,6 +39,8 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
     @NotNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (flags == null) initFlags(parent.getContext());
+
         BaseViewHolder holder = null;
         if (viewType == TYPE_ACTIVITY) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_activity, parent, false);
@@ -43,6 +50,15 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
             holder = new TalkViewHolder(view);
         }
         return holder;
+    }
+
+    private void initFlags(Context context) {
+        flags = new HashMap<>();
+        flags.put("de", context.getDrawable(R.drawable.f_ger));
+        flags.put("ru", context.getDrawable(R.drawable.f_rus));
+        flags.put("gb", context.getDrawable(R.drawable.f_uk));
+        flags.put("ua", context.getDrawable(R.drawable.f_ukr));
+        flags.put("us", context.getDrawable(R.drawable.f_usa));
     }
 
     @Override
@@ -141,16 +157,23 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
             track.setText(talk.track);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 if (talk.track.toLowerCase().equals("android")) {
-                    track.setBackgroundColor(track.getContext().getColor(R.color.track_android));
+                    ((GradientDrawable) track.getBackground()).setColor(track.getContext().getColor(R.color.track_android));
+                    //track.setBackgroundColor(track.getContext().getColor(R.color.track_android));
                 } else if (talk.track.toLowerCase().equals("frontend")) {
-                        track.setBackgroundColor(track.getContext().getColor(R.color.track_frontend));
+                    ((GradientDrawable) track.getBackground()).setColor(track.getContext().getColor(R.color.track_frontend));
+                    //track.setBackgroundColor(track.getContext().getColor(R.color.track_frontend));
                 } else if (talk.track.toLowerCase().equals("common")) {
-                        track.setBackgroundColor(track.getContext().getColor(R.color.track_common));
+                    ((GradientDrawable) track.getBackground()).setColor(track.getContext().getColor(R.color.track_common));
+                    //track.setBackgroundColor(track.getContext().getColor(R.color.track_common));
                 }
             else
-                track.setBackgroundColor(0xFFFFFF);
+                    ((GradientDrawable) track.getBackground()).setColor(0xDDDDDD);
 
             speakerCompany.setText(talk.getSpeakerCompany());
+
+            String location = talk.getSpeakerCountry().toLowerCase();
+            speakerCountry.setBackground(flags.get(location));
+
         }
     }
 

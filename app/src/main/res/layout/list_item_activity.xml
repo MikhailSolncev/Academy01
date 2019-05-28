@@ -25,6 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="theme"
+        android:textStyle="bold"
         android:id="@+id/list_item_text_view_theme"
         android:textSize="@dimen/text_size_list"
         />

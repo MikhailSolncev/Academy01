@@ -27,7 +27,7 @@ public class Talk extends Activity {
     }
     public String getSpeakerCountry() {
         if (speaker == null) return "";
-        return speaker.location;
+        return speaker.flagImage;
     }
     public String getSpeakerCompany() {
         if (speaker == null) return "";
