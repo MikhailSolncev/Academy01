@@ -11,4 +11,7 @@
     <string name="show_author_kalbaev">Ruslan Kalbaev</string>
     <string name="show_title_offline_mode">Offline mode mobile app support. Synchronization</string>
     <string name="show_area_android">Android</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

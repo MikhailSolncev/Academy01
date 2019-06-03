@@ -118,7 +118,7 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
         void setupOnClick(View itemView) {
             itemView.setOnClickListener(view -> {
                 Context context = itemView.getContext();
-                Intent intent = new Intent(context, MainActivity.class);
+                Intent intent = new Intent(context, DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("lecture", activity);
                 intent.putExtras(bundle);

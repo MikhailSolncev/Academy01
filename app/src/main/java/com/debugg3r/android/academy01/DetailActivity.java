@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.debugg3r.android.academy01.data.Activity;
 import com.debugg3r.android.academy01.data.Talk;
 
-public class MainActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
