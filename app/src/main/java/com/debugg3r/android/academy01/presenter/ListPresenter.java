@@ -1,8 +1,5 @@
 package com.debugg3r.android.academy01.presenter;
 
-import android.hardware.camera2.CameraManager;
-
-import com.debugg3r.android.academy01.ListActivity;
 import com.debugg3r.android.academy01.data.Activity;
 import com.debugg3r.android.academy01.data.DataProvider;
 

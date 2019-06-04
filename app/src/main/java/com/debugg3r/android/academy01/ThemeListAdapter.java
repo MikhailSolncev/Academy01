@@ -39,16 +39,18 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
     @NotNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (flags == null) initFlags(parent.getContext());
+        Context context = parent.getContext();
+        if (flags == null) initFlags(context);
 
-        BaseViewHolder holder = null;
+        BaseViewHolder holder;
         if (viewType == TYPE_ACTIVITY) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_activity, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.list_item_activity, parent, false);
             holder = new ActivityViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_talk, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.list_item_talk, parent, false);
             holder = new TalkViewHolder(view);
         }
+
         return holder;
     }
 
@@ -118,11 +120,15 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
         void setupOnClick(View itemView) {
             itemView.setOnClickListener(view -> {
                 Context context = itemView.getContext();
-                Intent intent = new Intent(context, DetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("lecture", activity);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                if (context instanceof ListFragment.OnFragmentInteractionListener) {
+                    ((ListFragment.OnFragmentInteractionListener) context)
+                            .onFragmentInteraction(activity.time, activity.title);
+                }
+//                Intent intent = new Intent(context, DetailActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("lecture", activity);
+//                intent.putExtras(bundle);
+//                context.startActivity(intent);
             });
         }
 
@@ -155,19 +161,20 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.Base
             room.setText("Room " + talk.room);
 
             track.setText(talk.track);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                if (talk.track.toLowerCase().equals("android")) {
-                    ((GradientDrawable) track.getBackground()).setColor(track.getContext().getColor(R.color.track_android));
-                    //track.setBackgroundColor(track.getContext().getColor(R.color.track_android));
-                } else if (talk.track.toLowerCase().equals("frontend")) {
-                    ((GradientDrawable) track.getBackground()).setColor(track.getContext().getColor(R.color.track_frontend));
-                    //track.setBackgroundColor(track.getContext().getColor(R.color.track_frontend));
-                } else if (talk.track.toLowerCase().equals("common")) {
-                    ((GradientDrawable) track.getBackground()).setColor(track.getContext().getColor(R.color.track_common));
-                    //track.setBackgroundColor(track.getContext().getColor(R.color.track_common));
-                }
-            else
-                    ((GradientDrawable) track.getBackground()).setColor(0xDDDDDD);
+            if (talk.track.toLowerCase().equals("android")) {
+                ((GradientDrawable) track.getBackground())
+                        .setColor(track.getContext().getResources().getColor(R.color.track_android));
+
+            } else if (talk.track.toLowerCase().equals("frontend")) {
+                ((GradientDrawable) track.getBackground())
+                        .setColor(track.getContext().getResources().getColor(R.color.track_frontend));
+
+            } else if (talk.track.toLowerCase().equals("common")) {
+                ((GradientDrawable) track.getBackground())
+                        .setColor(track.getContext().getResources().getColor(R.color.track_common));
+
+            } else
+                ((GradientDrawable) track.getBackground()).setColor(0xDDDDDD);
 
             speakerCompany.setText(talk.getSpeakerCompany());
 

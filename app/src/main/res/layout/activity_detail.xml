@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_layout">
+
+    <TextView
+        android:id="@+id/text_view_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_title"
+        android:text="@string/show_title_offline_mode"
+        android:textSize="@dimen/text_size_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_track"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_area"
+        android:text="@string/show_area_android"
+        android:textSize="@dimen/text_size_content"
+        android:textStyle="bold"
+        android:textColor="@color/text_white"
+        android:background="@drawable/rectange_rounded"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
+
+    <TextView
+        android:id="@+id/text_view_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_author"
+        android:text="@string/show_author_kalbaev"
+        android:textSize="@dimen/text_size_content"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_track" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/margin_description"
+        android:paddingTop="0dp"
+        android:paddingEnd="@dimen/margin_description"
+        android:scrollbars="vertical"
+        android:id="@+id/text_view_description"
+        android:text="@string/show_description_offline_mode"
+        android:textSize="@dimen/text_size_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_speaker"
+        tools:scrollbarSize="@dimen/margin_description" />
+
+    <Button
+        android:id="@+id/button_all_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_all_show"
+        android:background="@color/button_blue_dark"
+        android:padding="@dimen/padding_all_show"
+        android:text="@string/button_all_show"
+        android:textColor="@color/text_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

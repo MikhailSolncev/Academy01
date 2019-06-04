@@ -116,9 +116,9 @@ public class ListFragment extends Fragment implements IListActivity {
         getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show());
     }
 
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String param1, String param2) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(param1, param2);
         }
     }
 
@@ -133,6 +133,6 @@ public class ListFragment extends Fragment implements IListActivity {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String param1, String param2);
     }
 }

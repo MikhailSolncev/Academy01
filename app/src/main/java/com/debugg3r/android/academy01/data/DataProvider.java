@@ -114,4 +114,14 @@ public class DataProvider{
             adapter.updateData(activities);
     }
 
+    public Activity getActivity(String time, String title) {
+        Activity result = null;
+        for (Activity activity : activities) {
+            if (activity.time.equals(time) && activity.title.equals(title)) {
+                result = activity;
+                break;
+            }
+        }
+        return result;
+    }
 }
